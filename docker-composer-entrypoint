@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+## install project
+[ -z $PROJECT_VCS ] || composer config \ 
+    --global repositories.0 "{\"type\": \"vcs\", \"url\": \"$PROJECT_VCS\"}"
+[ -z $PROJECT_NAME ] || composer create-project \
+    --stability=dev \
+    --prefer-source \
+    --no-interaction \
+    --keep-vcs \
+    $PROJECT_NAME $PROJECT_WORKDIR
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+        set -- php "$@"
+fi
+
