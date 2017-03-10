@@ -65,6 +65,6 @@ EXPOSE 9000
 
 COPY docker-composer-entrypoint /usr/local/bin/docker-composer-entrypoint
 RUN chmod 755 /usr/local/bin/docker-composer-entrypoint
-ENTRYPOINT ["docker-composer-entrypoint"]
+ENTRYPOINT ["/usr/local/bin/docker-composer-entrypoint"]
 CMD ["php-fpm"]
 
