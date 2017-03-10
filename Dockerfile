@@ -64,6 +64,7 @@ RUN sed -i -e 's/listen.*/listen = 0.0.0.0:9000/' /usr/local/etc/php-fpm.conf
 EXPOSE 9000
 
 COPY docker-composer-entrypoint /usr/local/bin/docker-composer-entrypoint
+RUN chmod 755 /usr/local/bin/docker-composer-entrypoint
 ENTRYPOINT ["docker-composer-entrypoint"]
 CMD ["php-fpm"]
 
