@@ -1,10 +1,15 @@
 #!/bin/sh
-set -e
+
+if [ -z "$DEBUG" ]; then
+    set -e
+else
+    set -ex
+fi
 
 ## install project
-[ -z $PROJECT_VCS ] || composer config \ 
+[ -z "$PROJECT_VCS" ] || /usr/bin/composer config \ 
     --global repositories.0 "{\"type\": \"vcs\", \"url\": \"$PROJECT_VCS\"}"
-[ -z $PROJECT_NAME ] || composer create-project \
+[ -z "$PROJECT_NAME" ] || /usr/bin/composer create-project \
     --stability=dev \
     --prefer-source \
     --no-interaction \
