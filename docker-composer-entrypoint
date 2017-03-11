@@ -1,20 +1,24 @@
 #!/bin/sh
 
-if [ -z "$DEBUG" ]; then
-    set -e
-else
-    set -ex
+set -e
+
+if [ ! -z "$DEBUG" ]; then
+    set -x
 fi
 
 ## install project
-[ -z "$PROJECT_VCS" ] || /usr/bin/composer config \ 
-    --global repositories.0 "{\"type\": \"vcs\", \"url\": \"$PROJECT_VCS\"}"
-[ -z "$PROJECT_NAME" ] || /usr/bin/composer create-project \
-    --stability=dev \
-    --prefer-source \
-    --no-interaction \
-    --keep-vcs \
-    $PROJECT_NAME $PROJECT_WORKDIR
+if [ ! -z "$PROJECT_VCS" ]; then 
+    /usr/bin/composer config --global repositories.0 "{\"type\": \"vcs\", \"url\": \"$PROJECT_VCS\"}"
+fi
+
+if [ ! -z "$PROJECT_NAME" ]; then 
+    /usr/bin/composer create-project \
+      --stability=dev \
+      --prefer-source \
+      --no-interaction \
+      --keep-vcs \
+      $PROJECT_NAME $PROJECT_WORKDIR
+fi
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
